@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<!-- saved from url=(0075)chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/agenty-iframe.html -->
+<html lang="en" ng-app="" class="ng-scope"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\:form{display:block;}</style>
+    
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Agenty</title>    
+	<link rel="stylesheet" href="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/toolbar/css/bootstrap.css">
+	<link rel="stylesheet" href="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/toolbar/css/agenty-iframe.css">	
+	<script src="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/toolbar/js/jquery.min.js"></script>
+	<script src="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/toolbar/js/bootstrap.min.js"></script> 	
+	<script src="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/toolbar/js/angular.min.js"></script>
+    <script src="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/toolbar/js/agenty-iframe.js"></script>
+</head>
+<body ng-controller="AgentyChromeController" style="background:none transparent;" class="ng-scope">
+<div id="sg_div"></div>
+<div id="agenty-sidebar" class="selectorgadget_ignore">
+        <div id="header" class="selectorgadget_ignore">
+            <div class="row" id="title">
+				<header class="header" style="padding-bottom: 5px;text-align: center;">
+					<a title="Agenty.com" href="https://www.agenty.com/" target="_blank">
+						<img src="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/agenty-logo-white.png" alt="Agenty" title="Agenty" style="width: 175px;">
+					</a>
+				</header>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">		
+					<div class="btn-group selectorgadget_ignore">
+					  <button ng-click="addField()" type="button" class="btn btn-default btn-sm"><i class="glyphicon glyphicon-plus"></i> New</button>
+					  <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+						<span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu" role="menu">
+						<li><a href="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/agenty-iframe.html#" ng-click="addField()">Field</a></li>
+						<li class="hidden"><a href="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/agenty-iframe.html#">Pagination</a></li>
+						<li class="hidden"><a href="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/agenty-iframe.html#">Authentication</a></li>
+					  </ul>
+					</div>
+					
+					<button ng-click="SaveAgentModel()" title="Save Scraping Agent" class="btn btn-default btn-sm selectorgadget_ignore">
+						<i class="glyphicon glyphicon-save-file"></i> Save
+					</button>			
+					
+					<div class="btn-group selectorgadget_ignore">
+					  <button type="button" class="btn btn-default btn-sm" data-toggle="dropdown"> Options</button>
+					  <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
+						<span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu" role="menu">					 
+						<li><a ng-click="PreviewResultModal()" href="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/agenty-iframe.html#">Preview Result</a></li>
+						<li><a ng-click="togglePosition()" href="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/agenty-iframe.html#">Toggle Position</a></li>
+						<li><a ng-click="MyAgentsModel()" href="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/agenty-iframe.html#">My Agents</a></li>
+						
+						<li><a ng-click="LoginModal()" href="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/agenty-iframe.html#">Sign in</a></li>
+						<li><a ng-click="SignOut()" href="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/agenty-iframe.html#">Sign Out</a></li>
+					  </ul>
+					</div>					
+					
+					<a ng-click="disable()" title="Exit Agenty" class="btn btn-default btn-sm selectorgadget_ignore"><i class="glyphicon glyphicon-remove"></i></a>
+				</div>
+			</div>            
+        </div>
+		<div id="body" class="selectorgadget_ignore">
+			<div class="row">
+				<div class="col-lg-12" style="height: 95%; position: absolute; padding-right: 4px;">
+					<ul class="fields-list selectorgadget_ignore">
+						<!-- ngRepeat: field in fields -->
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- Modal -->
+		
+</div>
+
+
+
+<div class="modal" id="PreviewResultModal" role="dialog" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">		
+	  <div class="modal-content">
+			<div class="modal-header">
+			  <button ng-click="toggleiFramefullWidth()" type="button" class="close" data-dismiss="modal">×</button>
+			  <h4 class="modal-title">Agenty - Preview Result</h4>
+			</div>
+			<div class="modal-body">
+			  <div class="row">
+                  <div class="col-xs-12">
+						<div class="form-group">
+							<p>Output Preview (<span class="ng-binding"></span> records)</p>
+							<textarea class="form-control ng-pristine ng-valid" id="extractionOutput" ng-model="resultJSON" rows="8" cols="1000" wrap="off" spellcheck="false"></textarea>
+						</div>
+						<a ng-click="exportJSON()" class="btn btn-info"><i class="glyphicon glyphicon-export"></i> JSON</a>
+						<a ng-click="exportCSV()" class="btn btn-info"><i class="glyphicon glyphicon-export"></i> CSV</a>
+						<a ng-click="exportTSV()" class="btn btn-info"><i class="glyphicon glyphicon-export"></i> TSV</a>
+				  </div>
+			 </div>
+			</div>
+			<div class="modal-footer">
+			  <button ng-click="toggleiFramefullWidth()" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>				  
+
+<div class="modal" id="LoginModal" role="dialog" data-backdrop="static" data-keyboard="false">
+		<div class="modal-dialog">		
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button ng-click="toggleiFramefullWidth()" type="button" class="close" data-dismiss="modal">×</button>
+			  <h4 class="modal-title">Sign in - Agenty.com</h4>
+			</div>
+			<div class="modal-body">
+			 	  <div class="alert alert-warning alert-dismissible ng-hide" ng-show="warningMessage.length &gt; 0">
+			    <a ng-click="warningMessage = &#39;&#39;" href="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/agenty-iframe.html#" class="close">×</a>
+			    <strong>Alert :</strong> <span class="warningMessage"></span>
+			  </div>
+			  <div class="alert alert-danger alert-dismissible ng-hide" ng-show="errorMessage.length &gt; 0">
+			    <a ng-click="errorMessage = &#39;&#39;" href="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/agenty-iframe.html#" class="close">×</a>
+			    <strong>Error :</strong> <span class="errorMessage"></span>
+			  </div>
+			  <div class="alert alert-success alert-dismissible ng-hide" ng-show="successMessage.length &gt; 0">
+			    <a ng-click="successMessage = &#39;&#39;" href="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/agenty-iframe.html#" class="close">×</a>
+			    <strong>Success :</strong> <span class="successMessage"></span>
+			  </div>
+			  <div class="row">
+                  <div class="col-xs-6">
+                      <div class="well">
+                          <form name="LoginForm" method="post" class="ng-pristine ng-invalid ng-invalid-required">
+                              <div class="form-group">
+                                  <label for="username" class="control-label">Your email*</label>
+                                  <input type="text" class="form-control ng-pristine ng-invalid ng-invalid-required" ng-model="user.email" placeholder="Enter your email id" required="">                                  
+                              </div>
+                              <div class="form-group">
+                                  <label for="password" class="control-label">Your password*</label>
+                                  <input type="password" class="form-control ng-pristine ng-invalid ng-invalid-required" ng-model="user.password" placeholder="Enter your password" required="">                                
+                              </div>
+                              <div id="loginErrorMsg" class="alert alert-error hide">Wrong username or password</div>
+                              <div class="checkbox">
+                                  <label>
+                                      <input type="checkbox" name="remember" ng-model="user.remember" ng-init="user.remember = true" class="ng-pristine ng-valid"> Remember me
+                                  </label>                                  
+                              </div>
+							  <button class="btn btn-success btn-block ng-hide" ng-show="SigningIn">Wait... </button> 
+                              <button type="submit" ng-click="LoginForm.$valid &amp;&amp; SignIn(user)" class="btn btn-success btn-block" ng-show="!SigningIn">Sign in</button>
+                              <a target="_blank" href="https://cloud.agenty.com/forgot-password.aspx" class="btn-block"><u>Forgot your password?</u></a>
+                          </form>
+                      </div>
+                  </div>
+                  <div class="col-xs-6">
+                      <p class="lead">Register now for <span class="text-success">FREE</span></p>
+                      <ul class="list-unstyled" style="line-height: 2">
+                          <li><i class="glyphicon glyphicon-ok text-success"></i> Manage all your agents</li>
+                          <li><i class="glyphicon glyphicon-ok text-success"></i> Pagination and batch crawling</li>
+                          <li><i class="glyphicon glyphicon-ok text-success"></i> Scripting and post-processing</li>
+                          <li><i class="glyphicon glyphicon-ok text-success"></i> Scheduling, email alerts and triggers</li>
+                          <li><i class="glyphicon glyphicon-ok text-success"></i> Crawl password protected sites</li>
+                          <li><a target="_blank" href="https://www.agenty.com/docs/"><u>Learn more</u></a></li>
+                      </ul>
+                      <p><a target="_blank" href="https://cloud.agenty.com/signup.aspx" class="btn btn-info btn-block">Yes please, register now!</a></p>
+                  </div>
+              </div>
+			</div>
+			<div class="modal-footer">
+			  <button ng-click="toggleiFramefullWidth()" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		  </div>		  
+		</div>
+</div>
+
+<div class="modal" id="SaveAgentModal" role="dialog" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">		
+	  <div class="modal-content">
+			<div class="modal-header">
+			  <button ng-click="toggleiFramefullWidth()" type="button" class="close" data-dismiss="modal">×</button>
+			  <h4 class="modal-title">Agenty - Save Agent</h4>
+			</div>
+			<div class="modal-body">
+			  <div class="alert alert-warning alert-dismissible ng-hide" ng-show="warningMessage.length &gt; 0">
+			    <a ng-click="warningMessage = &#39;&#39;" href="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/agenty-iframe.html#" class="close">×</a>
+			    <strong>Alert :</strong> <span class="warningMessage"></span>
+			  </div>
+			  <div class="alert alert-danger alert-dismissible ng-hide" ng-show="errorMessage.length &gt; 0">
+			    <a ng-click="errorMessage = &#39;&#39;" href="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/agenty-iframe.html#" class="close">×</a>
+			    <strong>Error :</strong> <span class="errorMessage"></span>
+			  </div>
+			  <div class="alert alert-success alert-dismissible ng-hide" ng-show="successMessage.length &gt; 0">
+			    <a ng-click="successMessage = &#39;&#39;" href="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/agenty-iframe.html#" class="close">×</a>
+			    <strong>Success :</strong> <span class="successMessage"></span>
+			  </div>
+			  <div class="row">
+                  <div class="col-xs-12">
+						<form name="SaveAgentForm" method="post" class="ng-pristine ng-invalid ng-invalid-required">
+                              <div class="form-group">
+                                  <label for="username" class="control-label">Name of agent*</label>
+                                  <input type="text" class="form-control ng-pristine ng-invalid ng-invalid-required" ng-model="agent.AgentName" placeholder="Name of your agent" required="">                                  
+                              </div>
+							  <div class="form-group">
+								<button class="btn btn-success btn-block ng-hide" ng-show="SavingAgent">Wait... </button> 
+								<button type="submit" ng-click="SaveAgentForm.$valid &amp;&amp; SaveAgent()" class="btn btn-success btn-block" ng-show="!SavingAgent">Save agent</button>								
+							</div>
+						</form>
+					</div>						
+				  </div>				 
+			 </div>
+			 <div class="modal-footer">
+			  <button ng-click="toggleiFramefullWidth()" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>			
+	</div>
+</div>
+
+<div class="modal" id="SignOutModel" role="dialog" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">		
+	  <div class="modal-content">
+			<div class="modal-header">
+			  <button ng-click="toggleiFramefullWidth()" type="button" class="close" data-dismiss="modal">×</button>
+			  <h4 class="modal-title">Agenty - Sign out</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xs-12">
+					  <div class="alert alert-success alert-dismissible">
+						<a href="chrome-extension://gpolcofcjjiooogejfbaamdgmgfehgff/core/agenty-iframe.html#" class="close">×</a>
+						<p><strong>Success :</strong> Signed out successfully!</p>
+					  </div>
+					</div>						
+				 </div>						 
+			 </div>
+			 <div class="modal-footer">
+				<button ng-click="toggleiFramefullWidth()" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>	
+		</div>
+	</div>
+</div>
+
+<div class="modal" id="MyAgentsModel" role="dialog" data-backdrop="static" data-keyboard="false">
+	<div class="modal-dialog">		
+	  <div class="modal-content">
+			<div class="modal-header">
+			  <button ng-click="toggleiFramefullWidth()" type="button" class="close" data-dismiss="modal">×</button>
+			  <h4 class="modal-title">My Agents - Agenty.com</h4>
+			</div>
+			<div class="modal-body">
+			  <div class="row">
+                  <div class="col-xs-12">
+					 	<table class="table">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Name</th>
+									<th>Last Run</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- ngRepeat: agent in myAgents -->
+							</tbody>
+						</table>
+					</div>						
+				  </div>
+			 </div>
+			<div class="modal-footer">
+			  <button ng-click="toggleiFramefullWidth()" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>	
+
+
+
+</body></html>
